@@ -11,11 +11,11 @@ try {
   // No .env file; rely on real environment variables / dev defaults.
 }
 
-const { config } = await import("./config");
-const { createApp } = await import("./http");
-const { ensureSchema } = await import("./db/schema");
-const { pingDb, getPool } = await import("./db/pool");
-const { createSocketServer } = await import("./realtime/io");
+import { config } from "./config";
+import { createApp } from "./http";
+import { ensureSchema } from "./db/schema";
+import { pingDb, getPool } from "./db/pool";
+import { createSocketServer } from "./realtime/io";
 
 async function main() {
   // Database: verify connectivity and ensure tables exist.
