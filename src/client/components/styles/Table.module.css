@@ -1,0 +1,61 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.page h1 {
+  margin: 0;
+  font-size: 1.6rem;
+}
+
+.empty {
+  color: var(--text-dim);
+  text-align: center;
+  padding: 2.5rem 1rem;
+  background: var(--bg-elev);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.table th,
+.table td {
+  padding: 0.7rem 0.9rem;
+  text-align: left;
+  font-variant-numeric: tabular-nums;
+}
+
+.table th {
+  background: var(--bg-elev-2);
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.table tbody tr {
+  border-top: 1px solid var(--border);
+}
+
+.table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.table a {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.rank {
+  font-weight: 800;
+  color: var(--text-dim);
+}

@@ -1,0 +1,147 @@
+.boardWrap {
+  position: relative;
+  width: 100%;
+}
+
+.board {
+  display: grid;
+  /* minmax(0,1fr) forces 8 equal tracks; plain 1fr (=minmax(auto,1fr)) lets a cell
+     grow to its piece's content height, producing uneven rows. */
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  grid-template-rows: repeat(8, minmax(0, 1fr));
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 3px solid #5a4230;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.square {
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.light {
+  background: var(--sq-light);
+}
+
+.dark {
+  background: var(--sq-dark);
+}
+
+.selected::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--sq-select);
+}
+
+.lastMove::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--sq-last);
+}
+
+.check {
+  background: radial-gradient(circle at center, var(--sq-check) 0%, transparent 72%);
+}
+
+.pieceWrap {
+  /* Absolute inset gives a definite square box (both dimensions) so the piece can't
+     fall back to its viewBox aspect ratio and overflow the cell. */
+  position: absolute;
+  inset: 9%;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  cursor: default;
+}
+
+/* Only pieces that are actually draggable (your own, on your turn) get the grab cursor. */
+.pieceDraggable {
+  cursor: grab;
+}
+
+.pieceDraggable:active {
+  cursor: grabbing;
+}
+
+.moveHint {
+  position: absolute;
+  width: 30%;
+  height: 30%;
+  border-radius: 50%;
+  background: rgba(20, 17, 14, 0.35);
+  z-index: 1;
+}
+
+.captureHint {
+  position: absolute;
+  inset: 6%;
+  border-radius: 50%;
+  border: 5px solid rgba(20, 17, 14, 0.35);
+  z-index: 1;
+}
+
+.fileLabel,
+.rankLabel {
+  position: absolute;
+  font-size: clamp(0.5rem, 1.4vw, 0.72rem);
+  font-weight: 700;
+  opacity: 0.6;
+  color: #14110e;
+  z-index: 3;
+}
+
+.dark .fileLabel,
+.dark .rankLabel {
+  color: var(--sq-light);
+}
+
+.fileLabel {
+  bottom: 1px;
+  right: 3px;
+}
+
+.rankLabel {
+  top: 1px;
+  left: 3px;
+}
+
+.promotion {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: grid;
+  place-items: center;
+  z-index: 20;
+}
+
+.promotionRow {
+  display: flex;
+  gap: 0.5rem;
+  background: var(--bg-elev);
+  padding: 0.6rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+.promoBtn {
+  width: clamp(48px, 12vw, 68px);
+  height: clamp(48px, 12vw, 68px);
+  background: var(--bg-elev-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 6px;
+  transition: background 0.15s;
+}
+
+.promoBtn:hover {
+  background: var(--accent);
+}

@@ -1,0 +1,22 @@
+.tray {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  min-height: 20px;
+  flex-wrap: wrap;
+}
+
+.captured {
+  width: 18px;
+  height: 18px;
+  display: inline-grid;
+  place-items: center;
+  opacity: 0.85;
+}
+
+.adv {
+  margin-left: 0.3rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-dim);
+}

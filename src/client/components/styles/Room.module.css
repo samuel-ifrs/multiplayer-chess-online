@@ -1,0 +1,211 @@
+.room {
+  display: grid;
+  grid-template-columns: minmax(320px, 1fr) 320px;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.boardColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-width: 640px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.playerBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.45rem 0.8rem;
+}
+
+.playerInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  flex-wrap: wrap;
+}
+
+.playerName {
+  font-weight: 700;
+}
+
+.colorLabel {
+  font-size: 0.78rem;
+  color: var(--text-faint);
+}
+
+.dotOn,
+.dotOff {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dotOn {
+  background: var(--good);
+  box-shadow: 0 0 6px var(--good);
+}
+
+.dotOff {
+  background: var(--text-faint);
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  position: sticky;
+  top: 4.5rem;
+}
+
+.statusBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.7rem 1rem;
+}
+
+.turn {
+  font-size: 0.82rem;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.notice {
+  margin: 0;
+  background: rgba(224, 164, 88, 0.12);
+  border: 1px solid var(--accent-strong);
+  color: var(--accent);
+  border-radius: var(--radius-sm);
+  padding: 0.55rem 0.8rem;
+  font-size: 0.88rem;
+  text-align: center;
+}
+
+.waiting {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  text-align: center;
+  color: var(--text-dim);
+}
+
+.shareLabel {
+  font-size: 0.8rem;
+  margin: 0.8rem 0 0.3rem;
+}
+
+.share {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.6rem;
+  color: var(--accent);
+  font-size: 0.82rem;
+  text-align: center;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.ctrlBtn,
+.resignBtn {
+  border: 1px solid var(--border);
+  background: var(--bg-elev-2);
+  color: var(--text);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem;
+  font-weight: 700;
+  transition: all 0.15s;
+}
+
+.ctrlBtn:hover {
+  border-color: var(--accent);
+}
+
+.resignBtn:hover {
+  border-color: var(--danger);
+  color: var(--bad);
+}
+
+.drawOffer {
+  background: var(--bg-elev);
+  border: 1px solid var(--accent-strong);
+  border-radius: var(--radius-sm);
+  padding: 0.7rem;
+  text-align: center;
+}
+
+.drawOffer p {
+  margin: 0 0 0.5rem;
+  font-size: 0.9rem;
+}
+
+.drawButtons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.accept,
+.decline {
+  flex: 1;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 0.5rem;
+  font-weight: 700;
+}
+
+.accept {
+  background: var(--good);
+  color: #0d1a0d;
+}
+
+.decline {
+  background: var(--bg-elev-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.centered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 4rem 1rem;
+  color: var(--text-dim);
+}
+
+.backLink {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+@media (max-width: 880px) {
+  .room {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    position: static;
+    max-width: 640px;
+    width: 100%;
+    margin: 0 auto;
+  }
+}

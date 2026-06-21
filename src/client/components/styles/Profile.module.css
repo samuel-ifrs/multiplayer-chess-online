@@ -1,0 +1,109 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.page h1 {
+  margin: 0;
+  font-size: 1.6rem;
+}
+
+.page h2 {
+  margin: 0.6rem 0 0;
+  font-size: 1.2rem;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 0.8rem;
+}
+
+.stat {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.statValue {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.statLabel {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.empty {
+  color: var(--text-dim);
+  padding: 1.5rem;
+  background: var(--bg-elev);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  text-align: center;
+}
+
+.history {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.gameRow {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 0.9rem;
+  flex-wrap: wrap;
+}
+
+.badge {
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  text-transform: uppercase;
+}
+
+.win {
+  background: rgba(109, 179, 107, 0.18);
+  color: var(--good);
+}
+
+.loss {
+  background: rgba(210, 113, 90, 0.18);
+  color: var(--bad);
+}
+
+.draw {
+  background: var(--bg-elev-2);
+  color: var(--text-dim);
+}
+
+.vs {
+  flex: 1;
+  min-width: 120px;
+}
+
+.tc,
+.moves,
+.date {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}

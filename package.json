@@ -1,0 +1,48 @@
+{
+  "name": "multiplayer-chess-online",
+  "version": "1.0.0",
+  "description": "Real-time multiplayer chess with rooms, clocks, chat, accounts and leaderboard.",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development tsx watch --ignore \"**/*.timestamp-*.mjs\" --ignore \"**/dist/**\" --ignore \"**/node_modules/**\" src/server/index.ts",
+    "build": "npm run build:client && npm run build:ssr",
+    "build:client": "vite build --outDir dist/client --ssrManifest",
+    "build:ssr": "vite build --ssr src/client/entry-server.tsx --outDir dist/server-entry",
+    "start": "cross-env NODE_ENV=production tsx src/server/index.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^7.2.0",
+    "bcryptjs": "^2.4.3",
+    "chess.js": "^1.0.0-beta.8",
+    "cookie": "^0.6.0",
+    "cookie-parser": "^1.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.11.5",
+    "nanoid": "^5.0.9",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
+    "tsx": "^4.19.2",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cookie": "^0.6.0",
+    "@types/cookie-parser": "^1.4.8",
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/node": "^22.10.5",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "cross-env": "^7.0.3",
+    "typescript": "^5.7.3",
+    "vite": "^5.4.11"
+  }
+}
