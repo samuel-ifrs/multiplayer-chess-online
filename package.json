@@ -11,7 +11,7 @@
     "build": "npm run build:client && npm run build:ssr",
     "build:client": "vite build --outDir dist/client --ssrManifest",
     "build:ssr": "vite build --ssr src/client/entry-server.tsx --outDir dist/server-entry",
-    "start": "cross-env NODE_ENV=production tsx src/server/index.ts",
+    "start": "cross-env NODE_ENV=production node dist/server-entry/entry-server.js",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
