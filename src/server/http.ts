@@ -67,13 +67,13 @@ async function mountDev(app: Express): Promise<void> {
 
 // ---- Production: static assets + prebuilt SSR bundle ----
 async function mountProd(app: Express): Promise<void> {
-  const clientDir = path.resolve(rootDir, "client");
+  const clientDir = path.resolve(rootDir, "dist/client");
   const template = fs.readFileSync(
     path.resolve(clientDir, "index.html"),
     "utf-8",
   );
   const { render } = (await import(
-    path.resolve(rootDir, "server-entry/entry-server.mjs")
+    path.resolve(rootDir, "dist/server/entry-server.mjs")
   )) as { render: RenderFn };
 
   // Hashed assets are immutable.
