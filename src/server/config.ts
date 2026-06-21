@@ -24,6 +24,9 @@ if (!logged) {
   console.log("[chess] configuration:", {
     ...config,
     jwtSecret: config.jwtSecret ? "[redacted]" : "(not set)",
+    db: config?.db?.password
+      ? { ...config.db, password: "[redacted]" }
+      : config.db,
   });
   logged = true;
 }
