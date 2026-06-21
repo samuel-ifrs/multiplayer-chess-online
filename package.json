@@ -2,7 +2,6 @@
   "name": "multiplayer-chess-online",
   "version": "1.0.0",
   "description": "Real-time multiplayer chess with rooms, clocks, chat, accounts and leaderboard.",
-  "type": "module",
   "engines": {
     "node": ">=22"
   },
