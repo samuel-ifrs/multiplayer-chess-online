@@ -73,7 +73,7 @@ async function mountProd(app: Express): Promise<void> {
     "utf-8",
   );
   const { render } = (await import(
-    path.resolve(rootDir, "server-entry/entry-server.js")
+    path.resolve(rootDir, "server-entry/entry-server.mjs")
   )) as { render: RenderFn };
 
   // Hashed assets are immutable.
