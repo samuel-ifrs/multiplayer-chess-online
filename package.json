@@ -11,7 +11,7 @@
     "build:client": "vite build --outDir dist/client --ssrManifest",
     "build:ssr": "vite build --ssr src/client/entry-server.tsx --outDir dist/server-entry",
     "build:server": "vite build --ssr src/server/index.ts --outDir dist/server",
-    "start": "node dist/server/index.js",
+    "start": "node dist/server/index.mjs",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
