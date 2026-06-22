@@ -1,19 +1,19 @@
-import type { ReactNode } from 'react'
-import type { PublicUser } from '@shared/types'
-import { I18nProvider } from './i18n/I18nProvider'
-import { AuthProvider } from './auth/AuthProvider'
-import { RouterProvider } from './router'
+import type { ReactNode } from 'react';
+import type { PublicUser } from '@shared/types';
+import { I18nProvider } from './i18n/I18nProvider';
+import { AuthProvider } from './auth/AuthProvider';
+import { RouterProvider } from './router';
 
 export function Providers({
   url,
   user,
   initialData,
-  children,
+  children
 }: {
-  url: string
-  user: PublicUser | null
-  initialData: unknown
-  children: ReactNode
+  url: string;
+  user: PublicUser | null;
+  initialData: unknown;
+  children: ReactNode;
 }) {
   return (
     <I18nProvider>
@@ -23,5 +23,5 @@ export function Providers({
         </RouterProvider>
       </AuthProvider>
     </I18nProvider>
-  )
+  );
 }

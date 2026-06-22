@@ -1,8 +1,8 @@
-import type { Color, GameOver } from '@shared/types'
-import { useI18n } from '../i18n/I18nProvider'
-import type { I18nKey } from '../i18n/en'
-import { Link } from '../router'
-import styles from './styles/Modal.module.css'
+import type { Color, GameOver } from '@shared/types';
+import { useI18n } from '../i18n/I18nProvider';
+import type { I18nKey } from '../i18n/en';
+import { Link } from '../router';
+import styles from './styles/Modal.module.css';
 
 const REASON_KEY: Record<GameOver['reason'], I18nKey> = {
   checkmate: 'reason_checkmate',
@@ -13,15 +13,21 @@ const REASON_KEY: Record<GameOver['reason'], I18nKey> = {
   draw_agreed: 'reason_draw_agreed',
   draw_repetition: 'reason_draw_repetition',
   draw_insufficient: 'reason_draw_insufficient',
-  draw_fifty_move: 'reason_draw_fifty_move',
-}
+  draw_fifty_move: 'reason_draw_fifty_move'
+};
 
-export function ResultModal({ result, myColor }: { result: GameOver; myColor: Color | null }) {
-  const { t } = useI18n()
+export function ResultModal({
+  result,
+  myColor
+}: {
+  result: GameOver;
+  myColor: Color | null;
+}) {
+  const { t } = useI18n();
 
-  let headline: I18nKey = 'result_draw'
+  let headline: I18nKey = 'result_draw';
   if (result.result !== 'draw' && myColor) {
-    headline = result.winner === myColor ? 'result_you_win' : 'result_you_lose'
+    headline = result.winner === myColor ? 'result_you_win' : 'result_you_lose';
   }
 
   return (
@@ -36,5 +42,5 @@ export function ResultModal({ result, myColor }: { result: GameOver; myColor: Co
         </div>
       </div>
     </div>
-  )
+  );
 }

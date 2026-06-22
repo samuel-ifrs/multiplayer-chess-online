@@ -1,7 +1,7 @@
-import http from "node:http";
+import http from 'node:http';
 
 console.log(
-  `[chess] starting server in ${process.env.NODE_ENV || "development"} mode…`,
+  `[chess] starting server in ${process.env.NODE_ENV || 'development'} mode…`
 );
 
 // Load .env (Node 22 built-in) if present — no dependency, no committed secrets.
@@ -11,21 +11,21 @@ try {
   // No .env file; rely on real environment variables / dev defaults.
 }
 
-import { config } from "./config";
-import { createApp } from "./http";
-import { ensureSchema } from "./db/schema";
-import { pingDb, getPool } from "./db/pool";
-import { createSocketServer } from "./realtime/io";
+import { config } from './config';
+import { createApp } from './http';
+import { ensureSchema } from './db/schema';
+import { pingDb, getPool } from './db/pool';
+import { createSocketServer } from './realtime/io';
 
 async function main() {
   // Database: verify connectivity and ensure tables exist.
   try {
     await pingDb();
     await ensureSchema();
-    console.log("[chess] database ready");
+    console.log('[chess] database ready');
   } catch (err) {
     console.error(
-      "[chess] DATABASE UNAVAILABLE — check your .env / MySQL credentials.",
+      '[chess] DATABASE UNAVAILABLE — check your .env / MySQL credentials.'
     );
     console.error(err);
     process.exit(1);
@@ -36,7 +36,7 @@ async function main() {
   const io = createSocketServer(server);
 
   server.listen(config.port, () => {
-    console.log(`[chess] listening on http://localhost:${config.port}`);
+    console.log(`[chess] listening on http://0.0.0.0:${config.port}`);
   });
 
   // Graceful shutdown: close sockets, HTTP and the DB pool so the process exits
@@ -50,18 +50,18 @@ async function main() {
     forced.unref();
     try {
       await io.close();
-      await new Promise<void>((resolve) => server.close(() => resolve()));
+      await new Promise<void>(resolve => server.close(() => resolve()));
       await getPool().end();
     } catch {
       /* ignore errors during shutdown */
     }
     process.exit(0);
   };
-  process.on("SIGINT", () => void shutdown("SIGINT"));
-  process.on("SIGTERM", () => void shutdown("SIGTERM"));
+  process.on('SIGINT', () => void shutdown('SIGINT'));
+  process.on('SIGTERM', () => void shutdown('SIGTERM'));
 }
 
-main().catch((err) => {
-  console.error("[chess] fatal startup error:", err);
+main().catch(err => {
+  console.error('[chess] fatal startup error:', err);
   process.exit(1);
 });

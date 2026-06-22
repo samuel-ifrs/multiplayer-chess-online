@@ -1,29 +1,29 @@
-import { useEffect, useRef, useState } from 'react'
-import type { ChatMessage } from '@shared/types'
-import { useI18n } from '../i18n/I18nProvider'
-import styles from './styles/Chat.module.css'
+import { useEffect, useRef, useState } from 'react';
+import type { ChatMessage } from '@shared/types';
+import { useI18n } from '../i18n/I18nProvider';
+import styles from './styles/Chat.module.css';
 
 interface ChatProps {
-  messages: ChatMessage[]
-  onSend: (text: string) => void
+  messages: ChatMessage[];
+  onSend: (text: string) => void;
 }
 
 export function Chat({ messages, onSend }: ChatProps) {
-  const { t } = useI18n()
-  const [text, setText] = useState('')
-  const listRef = useRef<HTMLDivElement>(null)
+  const { t } = useI18n();
+  const [text, setText] = useState('');
+  const listRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    listRef.current?.scrollTo({ top: listRef.current.scrollHeight })
-  }, [messages])
+    listRef.current?.scrollTo({ top: listRef.current.scrollHeight });
+  }, [messages]);
 
   const submit = (e: React.FormEvent) => {
-    e.preventDefault()
-    const trimmed = text.trim()
-    if (!trimmed) return
-    onSend(trimmed)
-    setText('')
-  }
+    e.preventDefault();
+    const trimmed = text.trim();
+    if (!trimmed) return;
+    onSend(trimmed);
+    setText('');
+  };
 
   return (
     <div className={styles.chat}>
@@ -35,7 +35,9 @@ export function Chat({ messages, onSend }: ChatProps) {
             className={m.from === 'system' ? styles.system : styles.message}
             data-color={m.from}
           >
-            {m.from !== 'system' && <span className={styles.author}>{m.name}</span>}
+            {m.from !== 'system' && (
+              <span className={styles.author}>{m.name}</span>
+            )}
             <span className={styles.text}>{m.text}</span>
           </div>
         ))}
@@ -44,7 +46,7 @@ export function Chat({ messages, onSend }: ChatProps) {
         <input
           className={styles.input}
           value={text}
-          onChange={(e) => setText(e.target.value)}
+          onChange={e => setText(e.target.value)}
           placeholder={t('chat_placeholder')}
           maxLength={500}
         />
@@ -53,5 +55,5 @@ export function Chat({ messages, onSend }: ChatProps) {
         </button>
       </form>
     </div>
-  )
+  );
 }

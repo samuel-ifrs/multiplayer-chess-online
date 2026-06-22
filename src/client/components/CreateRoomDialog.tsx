@@ -1,30 +1,34 @@
-import { useState } from 'react'
-import type { ColorPref } from '@shared/types'
-import { TIME_CONTROL_IDS, TIME_CONTROLS, type TimeControlId } from '@shared/timeControls'
-import { useI18n } from '../i18n/I18nProvider'
-import { getSocket } from '../socket'
-import styles from './styles/Modal.module.css'
+import { useState } from 'react';
+import type { ColorPref } from '@shared/types';
+import {
+  TIME_CONTROL_IDS,
+  TIME_CONTROLS,
+  type TimeControlId
+} from '@shared/timeControls';
+import { useI18n } from '../i18n/I18nProvider';
+import { getSocket } from '../socket';
+import styles from './styles/Modal.module.css';
 
 export function CreateRoomDialog({
   onClose,
-  onCreated,
+  onCreated
 }: {
-  onClose: () => void
-  onCreated: (roomId: string) => void
+  onClose: () => void;
+  onCreated: (roomId: string) => void;
 }) {
-  const { t } = useI18n()
-  const [name, setName] = useState('')
-  const [isPrivate, setIsPrivate] = useState(false)
-  const [password, setPassword] = useState('')
-  const [timeControl, setTimeControl] = useState<TimeControlId>('10+0')
-  const [colorPref, setColorPref] = useState<ColorPref>('random')
-  const [error, setError] = useState(false)
-  const [busy, setBusy] = useState(false)
+  const { t } = useI18n();
+  const [name, setName] = useState('');
+  const [isPrivate, setIsPrivate] = useState(false);
+  const [password, setPassword] = useState('');
+  const [timeControl, setTimeControl] = useState<TimeControlId>('10+0');
+  const [colorPref, setColorPref] = useState<ColorPref>('random');
+  const [error, setError] = useState(false);
+  const [busy, setBusy] = useState(false);
 
   const submit = (e: React.FormEvent) => {
-    e.preventDefault()
-    setError(false)
-    setBusy(true)
+    e.preventDefault();
+    setError(false);
+    setBusy(true);
     getSocket().emit(
       'lobby:create',
       {
@@ -32,19 +36,23 @@ export function CreateRoomDialog({
         isPrivate,
         password: isPrivate ? password : undefined,
         timeControl,
-        colorPref,
+        colorPref
       },
-      (res) => {
-        setBusy(false)
-        if (res.ok) onCreated(res.data.roomId)
-        else setError(true)
-      },
-    )
-  }
+      res => {
+        setBusy(false);
+        if (res.ok) onCreated(res.data.roomId);
+        else setError(true);
+      }
+    );
+  };
 
   return (
     <div className={styles.overlay} onClick={onClose}>
-      <form className={styles.modal} onClick={(e) => e.stopPropagation()} onSubmit={submit}>
+      <form
+        className={styles.modal}
+        onClick={e => e.stopPropagation()}
+        onSubmit={submit}
+      >
         <h2 className={styles.title}>{t('create_title')}</h2>
 
         <label className={styles.label}>
@@ -52,7 +60,7 @@ export function CreateRoomDialog({
           <input
             className={styles.input}
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={e => setName(e.target.value)}
             maxLength={40}
             placeholder={t('create_name')}
           />
@@ -61,11 +69,19 @@ export function CreateRoomDialog({
         <fieldset className={styles.group}>
           <legend>{t('create_visibility')}</legend>
           <label className={styles.radio}>
-            <input type="radio" checked={!isPrivate} onChange={() => setIsPrivate(false)} />
+            <input
+              type="radio"
+              checked={!isPrivate}
+              onChange={() => setIsPrivate(false)}
+            />
             {t('create_public')}
           </label>
           <label className={styles.radio}>
-            <input type="radio" checked={isPrivate} onChange={() => setIsPrivate(true)} />
+            <input
+              type="radio"
+              checked={isPrivate}
+              onChange={() => setIsPrivate(true)}
+            />
             {t('create_private')}
           </label>
         </fieldset>
@@ -77,7 +93,7 @@ export function CreateRoomDialog({
               className={styles.input}
               type="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={e => setPassword(e.target.value)}
               required
               maxLength={64}
             />
@@ -89,9 +105,9 @@ export function CreateRoomDialog({
           <select
             className={styles.input}
             value={timeControl}
-            onChange={(e) => setTimeControl(e.target.value as TimeControlId)}
+            onChange={e => setTimeControl(e.target.value as TimeControlId)}
           >
-            {TIME_CONTROL_IDS.map((id) => (
+            {TIME_CONTROL_IDS.map(id => (
               <option key={id} value={id}>
                 {TIME_CONTROLS[id].label}
               </option>
@@ -101,10 +117,20 @@ export function CreateRoomDialog({
 
         <fieldset className={styles.group}>
           <legend>{t('create_color')}</legend>
-          {(['w', 'b', 'random'] as ColorPref[]).map((c) => (
+          {(['w', 'b', 'random'] as ColorPref[]).map(c => (
             <label key={c} className={styles.radio}>
-              <input type="radio" checked={colorPref === c} onChange={() => setColorPref(c)} />
-              {t(c === 'w' ? 'create_white' : c === 'b' ? 'create_black' : 'create_random')}
+              <input
+                type="radio"
+                checked={colorPref === c}
+                onChange={() => setColorPref(c)}
+              />
+              {t(
+                c === 'w'
+                  ? 'create_white'
+                  : c === 'b'
+                    ? 'create_black'
+                    : 'create_random'
+              )}
             </label>
           ))}
         </fieldset>
@@ -121,5 +147,5 @@ export function CreateRoomDialog({
         </div>
       </form>
     </div>
-  )
+  );
 }

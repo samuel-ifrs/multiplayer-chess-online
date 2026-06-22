@@ -1,27 +1,29 @@
-import { useEffect, useState } from 'react'
-import type { LeaderboardEntry } from '@shared/types'
-import { useI18n } from '../i18n/I18nProvider'
-import { Link, useRouter } from '../router'
-import { api } from '../api'
-import styles from '../components/styles/Table.module.css'
+import { useEffect, useState } from 'react';
+import type { LeaderboardEntry } from '@shared/types';
+import { useI18n } from '../i18n/I18nProvider';
+import { Link, useRouter } from '../router';
+import { api } from '../api';
+import styles from '../components/styles/Table.module.css';
 
 interface RankingData {
-  leaderboard: LeaderboardEntry[]
+  leaderboard: LeaderboardEntry[];
 }
 
 export function Leaderboard() {
-  const { t } = useI18n()
-  const { initialData } = useRouter()
-  const seeded = (initialData as RankingData | null)?.leaderboard
-  const [entries, setEntries] = useState<LeaderboardEntry[] | null>(seeded ?? null)
+  const { t } = useI18n();
+  const { initialData } = useRouter();
+  const seeded = (initialData as RankingData | null)?.leaderboard;
+  const [entries, setEntries] = useState<LeaderboardEntry[] | null>(
+    seeded ?? null
+  );
 
   useEffect(() => {
-    if (entries) return
+    if (entries) return;
     api
       .leaderboard()
-      .then((res) => setEntries(res.leaderboard))
-      .catch(() => setEntries([]))
-  }, [entries])
+      .then(res => setEntries(res.leaderboard))
+      .catch(() => setEntries([]));
+  }, [entries]);
 
   return (
     <div className={styles.page}>
@@ -43,11 +45,13 @@ export function Leaderboard() {
             </tr>
           </thead>
           <tbody>
-            {entries.map((e) => (
+            {entries.map(e => (
               <tr key={e.username}>
                 <td className={styles.rank}>{e.rank}</td>
                 <td>
-                  <Link to={`/profile/${encodeURIComponent(e.username)}`}>{e.username}</Link>
+                  <Link to={`/profile/${encodeURIComponent(e.username)}`}>
+                    {e.username}
+                  </Link>
                 </td>
                 <td>{e.wins}</td>
                 <td>{e.losses}</td>
@@ -59,5 +63,5 @@ export function Leaderboard() {
         </table>
       )}
     </div>
-  )
+  );
 }

@@ -1,19 +1,24 @@
-import type { RowDataPacket } from 'mysql2'
-import { getPool } from './pool'
-import type { GameHistoryEntry, GameReason, GameResult } from '../../shared/types'
-import type { TimeControlId } from '../../shared/timeControls'
+import type {
+  GameHistoryEntry,
+  GameReason,
+  GameResult
+} from '../../shared/types';
+
+import type { RowDataPacket } from 'mysql2';
+import type { TimeControlId } from '../../shared/timeControls';
+import { getPool } from './pool';
 
 export interface RecordGameParams {
-  whiteId: number | null
-  blackId: number | null
-  whiteName: string
-  blackName: string
-  result: GameResult
-  reason: GameReason
-  timeControl: TimeControlId
-  movesCount: number
-  pgn: string
-  startedAt: Date | null
+  whiteId: number | null;
+  blackId: number | null;
+  whiteName: string;
+  blackName: string;
+  result: GameResult;
+  reason: GameReason;
+  timeControl: TimeControlId;
+  movesCount: number;
+  pgn: string;
+  startedAt: Date | null;
 }
 
 /**
@@ -21,10 +26,15 @@ export interface RecordGameParams {
  * transaction so the leaderboard never drifts from the game log.
  */
 export async function recordGame(params: RecordGameParams): Promise<void> {
-  const dbResult = params.result === 'draw' ? 'draw' : params.result === 'w' ? 'white' : 'black'
-  const conn = await getPool().getConnection()
+  const dbResult =
+    params.result === 'draw'
+      ? 'draw'
+      : params.result === 'w'
+        ? 'white'
+        : 'black';
+  const conn = await getPool().getConnection();
   try {
-    await conn.beginTransaction()
+    await conn.beginTransaction();
 
     await conn.query(
       `INSERT INTO games
@@ -41,48 +51,54 @@ export async function recordGame(params: RecordGameParams): Promise<void> {
         timeControl: params.timeControl,
         movesCount: params.movesCount,
         pgn: params.pgn,
-        startedAt: params.startedAt,
-      },
-    )
+        startedAt: params.startedAt
+      }
+    );
 
-    const bump = async (id: number | null, field: 'wins' | 'losses' | 'draws') => {
-      if (id == null) return
+    const bump = async (
+      id: number | null,
+      field: 'wins' | 'losses' | 'draws'
+    ) => {
+      if (id === null || id === undefined) return;
       await conn.query(
         `UPDATE players SET ${field} = ${field} + 1, games_played = games_played + 1 WHERE id = :id`,
-        { id },
-      )
-    }
+        { id }
+      );
+    };
 
     if (params.result === 'draw') {
-      await bump(params.whiteId, 'draws')
-      await bump(params.blackId, 'draws')
+      await bump(params.whiteId, 'draws');
+      await bump(params.blackId, 'draws');
     } else if (params.result === 'w') {
-      await bump(params.whiteId, 'wins')
-      await bump(params.blackId, 'losses')
+      await bump(params.whiteId, 'wins');
+      await bump(params.blackId, 'losses');
     } else {
-      await bump(params.blackId, 'wins')
-      await bump(params.whiteId, 'losses')
+      await bump(params.blackId, 'wins');
+      await bump(params.whiteId, 'losses');
     }
 
-    await conn.commit()
+    await conn.commit();
   } catch (err) {
-    await conn.rollback()
-    throw err
+    await conn.rollback();
+    throw err;
   } finally {
-    conn.release()
+    conn.release();
   }
 }
 
-export async function getPlayerGames(username: string, limit = 30): Promise<GameHistoryEntry[]> {
+export async function getPlayerGames(
+  username: string,
+  limit = 30
+): Promise<GameHistoryEntry[]> {
   const [rows] = await getPool().query<RowDataPacket[]>(
     `SELECT id, white_name, black_name, result, reason, time_control, moves_count, pgn, ended_at
      FROM games
      WHERE white_name = :username OR black_name = :username
      ORDER BY ended_at DESC
      LIMIT :limit`,
-    { username, limit },
-  )
-  return rows.map((r) => ({
+    { username, limit }
+  );
+  return rows.map(r => ({
     id: Number(r.id),
     whiteName: r.white_name,
     blackName: r.black_name,
@@ -91,6 +107,6 @@ export async function getPlayerGames(username: string, limit = 30): Promise<Game
     timeControl: r.time_control as TimeControlId,
     movesCount: Number(r.moves_count),
     pgn: r.pgn,
-    endedAt: new Date(r.ended_at).toISOString(),
-  }))
+    endedAt: new Date(r.ended_at).toISOString()
+  }));
 }

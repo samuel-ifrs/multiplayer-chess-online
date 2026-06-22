@@ -1,8 +1,8 @@
-import { getPool } from './pool'
+import { getPool } from './pool';
 
 // Idempotent schema bootstrap. Run once on server start.
 export async function ensureSchema(): Promise<void> {
-  const pool = getPool()
+  const pool = getPool();
 
   await pool.query(`
     CREATE TABLE IF NOT EXISTS players (
@@ -17,7 +17,7 @@ export async function ensureSchema(): Promise<void> {
       PRIMARY KEY (id),
       UNIQUE KEY uq_username (username)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-  `)
+  `);
 
   await pool.query(`
     CREATE TABLE IF NOT EXISTS games (
@@ -38,5 +38,5 @@ export async function ensureSchema(): Promise<void> {
       KEY idx_black (black_id),
       KEY idx_ended (ended_at)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-  `)
+  `);
 }

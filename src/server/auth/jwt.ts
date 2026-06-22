@@ -1,26 +1,27 @@
-import jwt from 'jsonwebtoken'
-import * as cookie from 'cookie'
-import { config, isProd } from '../config'
-import type { PublicUser } from '../../shared/types'
+import jwt from 'jsonwebtoken';
+import * as cookie from 'cookie';
+import { config, isProd } from '../config';
+import type { PublicUser } from '../../shared/types';
 
 interface TokenPayload {
-  id: number
-  username: string
+  id: number;
+  username: string;
 }
 
 export function signToken(user: PublicUser): string {
   return jwt.sign({ id: user.id, username: user.username }, config.jwtSecret, {
-    expiresIn: config.jwtMaxAgeSeconds,
-  })
+    expiresIn: config.jwtMaxAgeSeconds
+  });
 }
 
 export function verifyToken(token: string): PublicUser | null {
   try {
-    const decoded = jwt.verify(token, config.jwtSecret) as TokenPayload
-    if (typeof decoded.id !== 'number' || typeof decoded.username !== 'string') return null
-    return { id: decoded.id, username: decoded.username }
+    const decoded = jwt.verify(token, config.jwtSecret) as TokenPayload;
+    if (typeof decoded.id !== 'number' || typeof decoded.username !== 'string')
+      return null;
+    return { id: decoded.id, username: decoded.username };
   } catch {
-    return null
+    return null;
   }
 }
 
@@ -31,8 +32,8 @@ export function serializeAuthCookie(token: string): string {
     secure: isProd,
     sameSite: 'lax',
     path: '/',
-    maxAge: config.jwtMaxAgeSeconds,
-  })
+    maxAge: config.jwtMaxAgeSeconds
+  });
 }
 
 export function clearAuthCookie(): string {
@@ -40,14 +41,16 @@ export function clearAuthCookie(): string {
     httpOnly: true,
     sameSite: 'lax',
     path: '/',
-    maxAge: 0,
-  })
+    maxAge: 0
+  });
 }
 
 /** Parse the auth cookie out of a raw Cookie header and return the verified user. */
-export function userFromCookieHeader(cookieHeader: string | undefined): PublicUser | null {
-  if (!cookieHeader) return null
-  const parsed = cookie.parse(cookieHeader)
-  const token = parsed[config.cookieName]
-  return token ? verifyToken(token) : null
+export function userFromCookieHeader(
+  cookieHeader: string | undefined
+): PublicUser | null {
+  if (!cookieHeader) return null;
+  const parsed = cookie.parse(cookieHeader);
+  const token = parsed[config.cookieName];
+  return token ? verifyToken(token) : null;
 }
