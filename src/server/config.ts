@@ -19,17 +19,13 @@ export const config = {
   }
 };
 
-let logged = false;
-if (!logged) {
-  console.log('[chess] configuration:', {
-    ...config,
-    jwtSecret: config.jwtSecret ? '[redacted]' : '(not set)',
-    db: config?.db?.password
-      ? { ...config.db, password: '[redacted]' }
-      : config.db
-  });
-  logged = true;
-}
+console.log('[chess] configuration:', {
+  ...config,
+  jwtSecret: config.jwtSecret ? '[redacted]' : '(not set)',
+  db: config?.db?.password
+    ? { ...config.db, password: '[redacted]' }
+    : config.db
+});
 
 if (isProd && !config.jwtSecret) {
   throw new Error('JWT_SECRET must be set in production');

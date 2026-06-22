@@ -13,8 +13,8 @@
     "build:ssr": "vite build --ssr src/client/entry-server.tsx --outDir dist/server-entry",
     "build:server": "vite build --ssr src/server/index.ts --outDir dist/server",
     "start": "node dist/server/index.mjs",
-    "lint-fix": "eslint . --ext .ts,.tsx --fix",
-    "lint": "eslint . --ext .ts,.tsx",
+    "lint-fix": "eslint . --ext .js,.jsx,.mjs,.ts,.tsx --fix",
+    "lint": "eslint . --ext .js,.jsx,.mjs,.ts,.tsx",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -51,8 +51,10 @@
     "@typescript-eslint/types": "^8.61.1",
     "@typescript-eslint/typescript-estree": "^8.61.1",
     "@typescript-eslint/parser": "^8.61.1",
-    "eslint": "^8.50.0",
+    "eslint": "^9.39.4",
     "eslint-plugin-prettier": "^5.5.6",
-    "eslint-plugin-react": "^7.37.5"
+    "eslint-plugin-react": "^7.37.5",
+    "@eslint/js": "^10.0.1",
+    "@eslint/eslintrc": "^3.3.5"
   }
 }
